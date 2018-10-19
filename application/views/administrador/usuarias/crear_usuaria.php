@@ -15,6 +15,10 @@
      .etiqueta{
         color: black;
      }
+     .caja{
+        border-color: #ffe033;
+        background-color:#f7d4d0;
+     }
 
  </style>
  <!-- Bread crumb -->
@@ -157,15 +161,42 @@
                                                         <a href="<?= base_url()?>Emprendedoras/VerUsuarias" style="color:white;" class="btn btn-success "><i class="fa fa-times-circle f-s-20" style="margin:10px;"></i>Cancelar</a>  
                                                         </div>
                                                         <div class="col-md-6">
-                                                        <button class="btn btn-primary"><i class="fa fa-floppy-o" style="margin:10px;"></i> Guardar</button>
-                                                            
+                                                        <button id="btnGuardar" class="btn btn-primary"><i class="fa fa-floppy-o" style="margin:10px;"></i> Guardar</button>
                                                         </div>
                                                         </div>
                                                     </form>
 							            <!-- End Bread crumb -->
-  
                                 </div>
                                 </div>
                         </div>
                     </div>
                 </div>
+<script type="text/javascript">
+    $(document).on("ready", function(){
+        $('#nomuser').on("change", verificar);
+    });
+    function verificar(){
+       nombre = $('#nomuser').val();
+       $.ajax({
+            url:"VerificarNomUser",
+            type:"POST",
+            data:{buscar:nombre},
+            success:function(respuesta){
+                var registro = eval(respuesta);
+                if(registro.length>0){
+                    $('#pass').val('');
+                    swal("Error","El nombre de usuario ya existe","error");
+                    //alert("El nombre de usuario ya existe");
+                    document.getElementById('btnGuardar').disabled=true;
+                     $('#nomuser').addClass('caja');
+                }
+                else{
+                    document.getElementById('btnGuardar').disabled=false;
+                    $('#nomuser').removeClass('caja');
+                }
+
+            }
+        });
+
+    }
+</script>

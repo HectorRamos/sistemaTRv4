@@ -45,7 +45,7 @@ foreach ($Guia->result() as $guia) {
                                             <div class="col-md-12">
                                                 <div class="form-group ">
                                                 <label class="control-label"> Editar la descripcion de la publicacion</label>
-                                                    <input type="text" name="Descripcion" class="form-control" required="true" value="<?= $guia->Descripcion_Guia?>">
+                                                    <input type="text" id="Descripcion" name="Descripcion" class="form-control" required value="<?= $guia->Descripcion_Guia?>">
                                                 </div>
                                             </div>   
                                         </div>
@@ -256,14 +256,15 @@ function ValidarImagen(obj){
     }
 
     if (!(/\.(jpg|png|gif|jpeg)$/i).test(uploadFile.name)) {
-        alert('El archivo a adjuntar no es una imagen');
+        //alert('El archivo a adjuntar no es una imagen');
+        sweetAlert("Accion no permitida","El archivo que intentas subir no es una imagen", "error");
     }
     else {
         var img = new Image();
         img.onload = function () {
             if (this.width.toFixed(0) != 400 && this.height.toFixed(0) != 246) {
                 //alert('Las medidas deben ser: 200 * 200');
-                sweetAlert("Accion no permitida", "Tamanio de la imagen no permitida", "error");
+                sweetAlert("Accion no permitida", "Tamanio de la imagen no permitida, el temaño permitido es de 720 pixeles de ancho y 540 de alto por favor verificar", "error");
                  $("#imagenN").val('');
                  document.getElementById('mostrarI').innerHTML='<img src="<?=base_url()?>plantilla/images/picture.png">';
 

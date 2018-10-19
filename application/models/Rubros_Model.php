@@ -41,5 +41,11 @@ class Rubros_Model extends CI_Model
 			return false;
 		}
 	}
+	public function verificarNombreRubro($nombre){
+		$sql = "SELECT Nombre_Rubro FROM tbl_Rubros WHERE Nombre_Rubro = '$nombre'";
+		$res =$this->db->query($sql);
+		return $res->result();
+
+	}
 
 }

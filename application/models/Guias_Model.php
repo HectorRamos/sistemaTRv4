@@ -28,13 +28,24 @@ class Guias_model extends CI_Model{
 	}
 	public function Ver_Guias($valor){
 		if($valor==1){
-			$sql="SELECT g.*, u.Nombre, u.fk_Tipo_Usuaria FROM tbl_Guias_Multimedia  AS g INNER JOIN tbl_Usuarias AS u ON g.FK_Id_Usuaria = u.pk_Id_Usuaria  WHERE g.Tipo_Publicacion='Documento'";
+			$sql="SELECT g.*, u.Nombre, u.fk_Tipo_Usuaria FROM tbl_Guias_Multimedia  AS g INNER JOIN tbl_Usuarias AS u ON g.FK_Id_Usuaria = u.pk_Id_Usuaria  WHERE g.Tipo_Publicacion='Documento'" ;
 		}
 		else if($valor==2){
 			$sql="SELECT g.*, u.Nombre, u.fk_Tipo_Usuaria FROM tbl_Guias_Multimedia  AS g INNER JOIN tbl_Usuarias AS u ON g.FK_Id_Usuaria = u.pk_Id_Usuaria  WHERE g.Tipo_Publicacion='Video'";
 		}
 		$result = $this->db->query($sql);
 		return $result;
+	}
+	public function Ver_GuiasPor($valor, $buscar){
+		
+		if($valor==1){
+			$sql="SELECT g.*, u.Nombre, u.fk_Tipo_Usuaria FROM tbl_Guias_Multimedia  AS g INNER JOIN tbl_Usuarias AS u ON g.FK_Id_Usuaria = u.pk_Id_Usuaria  WHERE g.Tipo_Publicacion='Documento'  AND g.Titulo_Guia LIKE '%$buscar%'";
+		}
+		else if($valor==2){
+			$sql="SELECT g.*, u.Nombre, u.fk_Tipo_Usuaria FROM tbl_Guias_Multimedia  AS g INNER JOIN tbl_Usuarias AS u ON g.FK_Id_Usuaria = u.pk_Id_Usuaria  WHERE g.Tipo_Publicacion='Video' AND g.Titulo_Guia LIKE '%$buscar%'";
+		}
+		$result = $this->db->query($sql);
+		return $result->result();
 	}
 	public function VerGuiaId($id){
 		$sql="SELECT g.*, u.Nombre, u.fk_Tipo_Usuaria FROM tbl_Guias_Multimedia  AS g INNER JOIN tbl_Usuarias AS u ON g.FK_Id_Usuaria = u.pk_Id_Usuaria WHERE g.pk_Id_Guia='$id'";
@@ -75,7 +86,7 @@ class Guias_model extends CI_Model{
 		//$id=$this->session->userdata('id');
 
 
-		$sql ="UPDATE tbl_Guias_Multimedia SET  Titulo_Guia='$titulo', Fecha_Publicacion='$fecha', Video_Multimedia='$video', Documento_Guia='$doc', Contenido='$contenido', Descripcion_Guia='Descripcion', Imagen='$img' WHERE pk_Id_Guia=$id";
+		$sql ="UPDATE tbl_Guias_Multimedia SET  Titulo_Guia='$titulo', Fecha_Publicacion='$fecha', Video_Multimedia='$video', Documento_Guia='$doc', Contenido='$contenido', Descripcion_Guia='$Descripcion', Imagen='$img' WHERE pk_Id_Guia=$id";
 		if($this->db->query($sql)){
 			return true;
 

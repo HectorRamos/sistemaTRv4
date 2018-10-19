@@ -1,6 +1,14 @@
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript"></script>
+
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js" ></script>
+<script type="text/javascript" src="<?= base_url()?>plantilla/componentes/js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({ selector:'textarea' });
+</script>
+
 
 <?php
 /*
@@ -68,13 +76,14 @@ if(isset($_POST['btn'])){
                                                          <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <textarea type="text" class="form-control" id="val-name " name="titulo" placeholder="Titulo de la Noticia" pattern="[A-Z-0-9]+" required></textarea> 
+                                                                        <textarea id="Titulo" type="text" class="form-control" id="val-name " name="titulo" placeholder="Titulo de la Noticia" pattern="[A-Z-0-9]+" required></textarea> 
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
+                                                                    
                                                                         <textarea type="text" class="form-control" id="val-name " name="Descripcion_Noticia" placeholder="Descripcion de la Noticia" pattern="[A-Z-0-9]+" required></textarea> 
                                                                     </div>
                                                                 </div>
@@ -82,7 +91,7 @@ if(isset($_POST['btn'])){
                                                              <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <textarea rows="8" cols="80" class=" form-control textarea_editor form-control" rows="15" style="height:300px" type="text" class="form-control" id="val-name " name="contenido" placeholder="Descripción o contenido" required></textarea> 
+                                                                        <textarea rows="8" cols="80" class=" form-control  form-control" rows="15" style="height:300px" type="text" class="form-control" id="val-name " name="contenido" placeholder="Descripción o contenido" required></textarea> 
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -95,7 +104,7 @@ if(isset($_POST['btn'])){
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                     <a onclick="SubirImg()" class="btn btn-info btn-medium" style="color:white; padding:0 25 0 25;"><i class="fa fa-upload fa-2x" style="margin-right:10px;"></i>Subir Imagen</a>
-                                                                    <input  hidden type="file" name="imagenN" id="imagenN" change="filePeview(this)">
+                                                                    <input  hidden type="file" name="imagenN" id="imagenN" change="ValidarImagen(this)">
                                                                     </div>
                                                                 </div>  
                                                             </div>
@@ -131,20 +140,47 @@ if(isset($_POST['btn'])){
 function SubirImg(){
     document.getElementById('imagenN').click();
 }
-function filePreview(input){
-if(input.files && input.files[0]){
-    var reader = new FileReader(); 
-    reader.readAsDataURL(input.files[0]);
-    reader.onload =function(e) {
-            //$('#formAnuncio + img').remove();
-            //$('#formAnuncio').after('<div class="col-md-4"><img  src="'+e.target.result+'"  width="450" height="300" id="vista"/>');
-            //$('#formAnuncio').innerHTML='<div class="col-md-4"><img  src="'+e.target.result+'"  width="450" height="300" id="vista"/>';
-            document.getElementById('mostrarI').innerHTML='<img  src="'+e.target.result+'"  width="200" height="200" id="vista" alt="Imagen a publicar"/>';
+function ValidarImagen(obj){
+    var uploadFile = obj.files[0];
+    if (!window.FileReader) {
+        alert('El navegador no soporta la lectura de archivos');
+        return;
     }
+
+    if (!(/\.(jpg|png|gif|jpeg)$/i).test(uploadFile.name)) {
+        //alert('El archivo a adjuntar no es una imagen');
+        sweetAlert("Accion no permitida","El archivo que intentas subir no es una imagen", "error");
+        document.getElementById('mostrarI').innerHTML='<img src="<?=base_url()?>plantilla/images/picture.png">';
     }
+    else {
+        var img = new Image();
+        img.onload = function () {
+            if (this.width.toFixed(0) != 720 && this.height.toFixed(0) != 540) {
+                //alert('Las medidas deben ser: 200 * 200');
+                sweetAlert("Accion no permitida", "Tamanio de la imagen no permitida, el temaño permitido es de 720 pixeles de ancho y 540 de alto por favor verificar", "error");
+                 $("#imagenN").val('');
+                 document.getElementById('mostrarI').innerHTML='<img src="<?=base_url()?>plantilla/images/picture.png">';
+
+            }
+            else if (uploadFile.size < 20000)
+            {
+                sweetAlert("Accion no permitida", "El tamaño de la imagen no puede exeder los 200kb", "error");
+                document.getElementById('mostrarI').innerHTML='<img src="<?=base_url()?>plantilla/images/picture.png">';
+               
+            }
+            else {
+                alert('Imagen correcta :)');
+                document.getElementById('mostrarI').innerHTML='<img  src="'+URL.createObjectURL(uploadFile)+'"  width="200" height="200" id="vista" alt="Imagen a publicar"/>';                
+            }
+        };
+        img.src = URL.createObjectURL(uploadFile);
+
+        
+    }                 
 }
+
 $('#imagenN').change(function(){
-    filePreview(this);
+    ValidarImagen(this);
 });
 $.fn.datepicker.dates['es'] = {
                 days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],

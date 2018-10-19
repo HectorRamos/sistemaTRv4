@@ -170,7 +170,7 @@ function ValidarImagen(obj, v){
         img.onload = function () {
             if (this.width.toFixed(0) != 720 && this.height.toFixed(0) != 540) {
                 //alert('Las medidas deben ser: 200 * 200');
-                sweetAlert("Accion no permitida", "Tamanio de la imagen no permitida", "error");
+                sweetAlert("Accion no permitida", "Tamanio de la imagen no permitida, el temaño permitido es de 720 pixeles de ancho y 540 de alto por favor verificar", "error");
                 // $("#imagen1").val('');
                  if(v==1){
                     $("#imagen1").val('');

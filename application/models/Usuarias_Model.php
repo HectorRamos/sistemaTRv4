@@ -16,6 +16,19 @@ class Usuarias_model extends CI_Model{
 			}
 		}
 	}
+	public function CargarUsuaria($id){
+		$sql="SELECT u.*, s.Nombre_Sede, t.Descripcion AS Tipo FROM tbl_Usuarias AS u INNER JOIN tbl_Sedes AS s ON u.FK_Sede=s.pk_Id_Sede INNER JOIN tbl_Tipos_Usuarias AS t ON u.fk_Tipo_Usuaria = t.pk_Id_Tipo WHERE u.pk_Id_Usuaria=$id";
+		$res =$this->db->query($sql);
+		return $res;
+
+
+	}
+	public function verificarNombreUser($nombre){
+		$sql = "SELECT Nombre FROM tbl_Usuarias WHERE Nom_User = '$nombre'";
+		$res =$this->db->query($sql);
+		return $res->result();
+
+	}
 	public function eliminarUsuaria($id){
 		$sql ="DELETE FROM tbl_Usuarias WHERE pk_Id_Usuaria='$id'";
 		if($this->db->query($sql)){
@@ -95,7 +108,7 @@ class Usuarias_model extends CI_Model{
 		$fechaActual = date("Y/m/d");
 		$id_user=$this->session->userdata('id');
 		$id_tipo=$this->session->userdata('id_tipo');
-		$sql="SELECT COUNT(*) AS Numero_Usuarias_Nuevas FROM tbl_Usuarias WHERE Fecha_Registro BETWEEN (SELECT Fecha_Actividad FROM tbl_Usuarias WHERE pk_Id_Usuaria=$id_user AND fk_Tipo_Usuaria=$id_tipo) AND '2018-10-02' AND fk_Tipo_Usuaria=3";
+		$sql="SELECT COUNT(*) AS Numero_Usuarias_Nuevas FROM tbl_Usuarias WHERE Fecha_Registro BETWEEN (SELECT Fecha_Actividad FROM tbl_Usuarias WHERE pk_Id_Usuaria=$id_user AND fk_Tipo_Usuaria=$id_tipo) AND '$fechaActual' AND fk_Tipo_Usuaria=3";
 		$num =$this->db->query($sql);
 		return $num;
 
@@ -110,6 +123,28 @@ class Usuarias_model extends CI_Model{
 		$sql="SELECT count(*) AS Registro, s.Nombre_Sede FROM tbl_Usuarias AS u INNER JOIN tbl_Sedes AS s ON u.FK_Sede = s.pk_Id_Sede WHERE FK_Sede=$id_sede";
 		$ns=$this->db->query($sql);
 		return $ns;
+	}
+	public function EditarUsuaria($data=null){
+		if($data!=null){
+			$id=$data['id_usuaria'];
+			$nombre=$data['nombre'];
+			$apellido=$data['apellido'];
+			$nomuser=$data['nomuser'];
+			$pass=$data['pass'];
+			$direccion=$data['direccion'];
+			$telefono=$data['telefono'];
+			$sede=$data['sede'];
+			$tipo=$data['tipo'];
+			$sql="UPDATE tbl_Usuarias SET FK_Sede=$sede, Nombre='$nombre', Apellido='$apellido', Nom_User='$nomuser', Pass='$pass', Direccion='$direccion',fk_Tipo_Usuaria=$tipo, Telefono='$telefono' WHERE pk_Id_Usuaria= '$id'";
+			if($this->db->query($sql)){
+				return true;
+
+			}
+			else{
+				return false;
+			}
+		}
+
 	}
 }
 ?>

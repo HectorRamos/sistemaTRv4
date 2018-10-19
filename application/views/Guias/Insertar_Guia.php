@@ -265,18 +265,6 @@ $('#BotonEnv').click(function(){
 function SubirImg(){
     document.getElementById('imagenN').click();
 }
-function filePreview(input){
-if(input.files && input.files[0]){
-    var reader = new FileReader(); 
-    reader.readAsDataURL(input.files[0]);
-    reader.onload =function(e) {
-            //$('#formAnuncio + img').remove();
-            //$('#formAnuncio').after('<div class="col-md-4"><img  src="'+e.target.result+'"  width="450" height="300" id="vista"/>');
-            //$('#formAnuncio').innerHTML='<div class="col-md-4"><img  src="'+e.target.result+'"  width="450" height="300" id="vista"/>';
-            document.getElementById('mostrarI').innerHTML='<img  src="'+e.target.result+'"  width="200" height="200" id="vista" alt="Imagen a publicar"/>';
-    }
-    }
-}
 $('#imagenN').change(function(){
     //filePreview(this);
     ValidarImagen(this);
@@ -290,14 +278,17 @@ function ValidarImagen(obj){
     }
 
     if (!(/\.(jpg|png|gif|jpeg)$/i).test(uploadFile.name)) {
-        alert('El archivo a adjuntar no es una imagen');
+        sweetAlert('Accion no permitida','El archivo a adjuntar no es una imagen','error');
+        $("#imagenN").val('');
+        document.getElementById('mostrarI').innerHTML='<img src="<?=base_url()?>plantilla/images/picture.png">';
+
     }
     else {
         var img = new Image();
         img.onload = function () {
             if (this.width.toFixed(0) != 400 && this.height.toFixed(0) != 246) {
                 //alert('Las medidas deben ser: 200 * 200');
-                sweetAlert("Accion no permitida", "Tamanio de la imagen no permitida", "error");
+                sweetAlert("Accion no permitida", "Tamanio de la imagen no permitida, el temaño permitido es de 720 pixeles de ancho y 540 de alto por favor verificar", "error");
                  $("#imagenN").val('');
                  document.getElementById('mostrarI').innerHTML='<img src="<?=base_url()?>plantilla/images/picture.png">';
 

@@ -32,6 +32,17 @@ class Guias extends CI_Controller {
 	    	self.location ="'.base_url().'Guias"</script>';
 	    }
 	}
+	public function BuscarGuiaspor(){
+		//$this->load->view('administrador/base/header');
+		if ($this->input->is_ajax_request()) {
+			$this->load->model('Guias_Model');
+			$valor = $this->input->POST("buscar");
+			$var = $this->input->POST("v");
+			$result = $this->Guias_Model->Ver_GuiasPor($var, $valor);
+			echo json_encode($result);
+		}
+
+	}
 	public function Cargar_Guias(){
 		$this->load->view('administrador/base/header');
 		$var = $this->input->GET('v');

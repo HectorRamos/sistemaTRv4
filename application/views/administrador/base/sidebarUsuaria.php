@@ -15,7 +15,9 @@
                         <li> <a class="has-arrow-inicio  " href="<?=base_url() ?>Login/home" aria-expanded="false"><i class="fa fa-home"></i><span class="hide-menu">Mi Perfil <span class="hide-menu"></span></span></a></li>
                         <li class="nav-label">Menú</li>
                         <li> <a class="has-arrow-inicio " href="<?=base_url() ?>Emprendedoras/" aria-expanded="false"><i class="fa fa-suitcase"></i><span class="hide-menu">Bolsa de Emprendedoras</span></a>
-                        </li>  
+                        </li> 
+                        <li> <a class="has-arrow  " href="<?=base_url() ?>Contactos/" aria-expanded="false"><i class="fa fa-suitcase"></i><span class="hide-menu">Mensajes</span></a>
+                        </li> 
                            <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-book"></i><span class="hide-menu">Noticias </span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="#" class="has-arrow">Ver Noticias</a>

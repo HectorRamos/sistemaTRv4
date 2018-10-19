@@ -111,7 +111,10 @@ class Emprendedoras extends CI_Controller {
 		$cant =  $this->input->GET('cantidad');
 		$this->load->model('Perfiles_Model');
 		$perfil=$this->Perfiles_Model->Ver_Perfil($var, $cant);
-		$datos = array('perfil'=>$perfil);
+		$this->load->model('Contactos_Model');
+		$veri=$this->Contactos_Model->VerificarContacto($var);
+		$veriP=$this->Contactos_Model->VerificarContactoP();
+		$datos = array('perfil'=>$perfil, 'verC'=>$veri,'Ver'=>$veriP);
 		if($this->session->userdata('login')){
 			$this->load->view('administrador/base/header');
 			
@@ -122,10 +125,45 @@ class Emprendedoras extends CI_Controller {
 			$this->load->view('administrador/base/headerVisitante');
 			$this->load->view('emprendedoras/ver_perfil', $datos);
 			$this->load->view('administrador/base/footer');
-			
 		}
-		
-
+	}
+	public function VerificarNomUser(){
+		if ($this->input->is_ajax_request()) {
+			$this->load->model('Usuarias_Model');
+			$valor = $this->input->POST("buscar");
+			//$valor="roxwite";
+			$result = $this->Usuarias_Model->verificarNombreUser($valor);
+			echo json_encode($result);
+		}
+	}
+	public function editar(){
+		$id= $this->input->GET('id');
+		$this->load->model("Usuarias_Model");
+		$res=$this->Usuarias_Model->CargarUsuaria($id);
+		$this->load->model('Usuarias_Model');
+		$resultado =$this->Usuarias_Model->CargarTipo();
+		$resultado2 =$this->Usuarias_Model->CargarSede();
+		$data=array('con' => $resultado, 'con2'=>$resultado2, 'info'=>$res);
+		$this->load->view('administrador/base/header');
+		$this->load->view('administrador/usuarias/EditarUsuaria', $data);
+		$this->load->view('administrador/base/footer');
+	}
+	public function EditarUsuaria(){
+		$this->load->model('Usuarias_Model');
+	    $datos=$this->input->POST();
+	    $bool= $this->Usuarias_Model->editarUsuaria($datos);
+	    if($bool){
+	    	echo '<script type="text/javascript">
+				alert("Informacion modificada con exito");
+				self.location ="'.base_url().'/Emprendedoras/VerUsuarias"
+				</script>';
+	    }
+	    else{
+	    	echo '<script type="text/javascript">
+				alert("Error al modificar la informacion");
+				self.location ="'.base_url().'/Emprendedoras/VerUsuarias"
+				</script>';
+	    }
 	}
 
 }

@@ -65,7 +65,7 @@
     }
     #Negocio{
         font-family: 'Rubik', sans-serif;
-        font-size: 50px;
+        
     }
     </style>
     <?php
@@ -83,13 +83,35 @@
                     <img src="<?php echo base_url().'plantilla/img_perfil/'.$Perfil->Foto_Perfil;?>"style="height:100px;" />
                  </div>
             </header>
-            <h3 id="Negocio"><?php echo $Perfil->Nombre_Negocio?></h3>
                 <div class="desc">
+                    <h3 id="Negocio"><?php echo $Perfil->Nombre_Negocio?></h3>
                    <p style="font-family: 'Rubik', sans-serif;"> <?php echo $Perfil->Descripcion_Negocio?></p>
                 </div>
                  <div class="contacts">
-                    <a onclick="MostrarC(<?php echo $Perfil->Correo?>)"><i class="fa fa-plus"></i></a>
-                    <a onmouseover="MostrarW(<?php echo $Perfil->Telefono?>)"><i class="fa fa-whatsapp"></i></a>
+                 <?php
+                 if($tipo=$this->session->userdata('login')){
+                    if (sizeof($verC->result())!=0) {
+                            echo '<a title="Ya me agregaste a tus contactos :)"><i class="fa fa-user"></i></a>';
+                    }
+                    else{
+                        if (sizeof($Ver->result())!=0) {
+                            echo '<a title="Ya me agregaste a tus contactos :)"><i class="fa fa-user"></i></a>';
+                        }
+                        else{
+                            $IdContacto=$Perfil->FK_Usuaria;
+                            $Nombre ="'".$Perfil->Nombre.$Perfil->Apellido."'";
+                            $foto="'".$Perfil->Foto_Perfil."'";
+                    ?>
+                    <div id="add">
+                    <a onclick="Agregar(<?php echo $IdContacto;?>, <?php echo $Nombre;?>, <?php echo $foto;?>)" title="Agregar a mis contactos"><i class="fa fa-user-plus"></i></a>
+                        
+                    </div>
+                    <?php
+                     } 
+                    }
+                    }
+                    ?>
+                    <a onclick="MostrarW(<?php echo $Perfil->Telefono?>)"><i class="fa fa-whatsapp"></i></a>
                     <a data-toggle="modal" data-target="#ModalMensaje" title="Iniciar chat en la plataforma"><i class="fa fa-envelope" ></i></a>
                     <div  class="clrear">
                     </div>
@@ -122,6 +144,7 @@
                 <a href="<?php echo base_url().'plantilla/img_perfil/'.$Perfil->Foto1;?>" data-lightbox="example-set" data-title="Nuestro trabajo">
                 <img src="<?php echo base_url().'plantilla/img_perfil/'.$Perfil->Foto1;?>" alt="" class="img-thumbnail"></a>
                 <p></p>
+                
             </article>
             <article class="col-md-3">
                 <a href="<?php echo base_url().'plantilla/img_perfil/'.$Perfil->Foto2;?>" data-lightbox="example-set" data-title="Nuestro trabajo">
@@ -220,6 +243,29 @@ $(document).on("submit", "#mensaje", function(e){
         }
     });*/
 });
+
+function Agregar(id, nombre, foto){
+    //alert(id+nombre+foto);
+    $.ajax({
+        url: '<?php echo base_url()?>Contactos/Guardar_Contacto',
+        type: "POST",
+        data: {Id:id, Nombre:nombre, Foto:foto},
+        success:function(data){
+            if(data==""){
+               swal("Contacto agregado", "Usted a gredado a este usuario a sus contactos", "success");
+               document.getElementById("Emisor_Mensaje").value="";
+               //$("#Contacto_Mensaje").val("");
+               //$("#Contenido_Mensaje").val("");
+               document.getElementById('add').innerHTML='<a title="Ya me agregaste a tus contactos :)"><i class="fa fa-user"></i></a>'
+            }
+            else
+            {
+                alert('error');
+            }
+        }
+    });
+
+}
     function guardar(id, emisor, contacto, contenido){
         //alert(contacto);
         $.ajax({

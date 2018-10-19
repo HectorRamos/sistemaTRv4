@@ -158,7 +158,8 @@
                     </ul>
                 </div>
             </nav>
-        </div>
+            </div>
+   
         <!-- End header header -->
         <?php
         //$id=$this->session->userdata('id');

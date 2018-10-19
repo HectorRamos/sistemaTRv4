@@ -1,3 +1,4 @@
+ 
  <script src="<?=base_url() ?>plantilla/mtl/material.min.js"></script>
  <link href="<?=base_url() ?>plantilla/mtl/material.min.css" rel="stylesheet">
 <style type="text/css">
@@ -60,12 +61,10 @@
 
     }
 </style>
-
-
   <main class="mdl-layout__content">
     <div class="page-content">
      <!--Carousel Wrapper-->
-<div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel">
+    <div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel">
     <!--Indicators-->
     <ol class="carousel-indicators">
         <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
@@ -110,9 +109,9 @@
     </a>
     <!--/.Controls-->
 </div>
+</div>
 <!--/.Carousel Wrapper-->
-    	
-    </div>
+ 
        <div id="filtros" class="col-lg-12 card">
 
        <div class="input-group input-group-rounded has-success">
@@ -164,6 +163,7 @@ Filtrar</a>
                  </div>
             </div>
 	    </div>
+
         <div class="container-fluid">
 	    		
 				<div class="row" id="DivRejillas">
@@ -196,15 +196,21 @@ Filtrar</a>
 						  </div>
 						
 						</div>
+
 					</div>
+                    
 					<?php
 							}
 					?>
 				</div>
-			</div>
-		</div>
-        
+                </div>
+                </div>
+                
+
+       
   </main>
+
+
 <script type="text/javascript">
     //$(document).on("ready", Buscar(" "));
     $(document).on("ready", main);
@@ -243,12 +249,12 @@ Filtrar</a>
                     /*
                     rutaF=nueva+imgN;*/
                     //alert(rutaF);
-                    html+='<div id="div12" class="col-lg-3"> <p style="color:#000d5a;"></p> <div class="demo-card-wide mdl-card mdl-shadow--2dp"><div class="mdl-card__title"><img class="images"  src="<?= base_url()?>plantilla/img_perfil/'+imagen+'"></div><div class="mdl-card__supporting-text"><h2 class="mdl-card__title-text">'+registros[i]["Nombre_Negocio"]+'</h2></div><div class="mdl-card__actions mdl-card--border"><span><i class="fa fa-eye" aria-hidden="true">'+registros[i]['Num_Visitas']+'</i></span><a id="perfil" href="<?= base_url()?>emprendedoras/ver_Perfil?id='+registros[i]['FK_Usuaria']+'&cantidad='+registros[i]['Num_Visitas']+'" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Ver perfil</a></div></div></div></div>';
+                    html+='<div id="div12" class="col-lg-3"> <p style="color:#000d5a;"></p> <div class="demo-card-wide mdl-card mdl-shadow--2dp"><div class="mdl-card__title"><img class="images"  src="<?= base_url()?>plantilla/img_perfil/'+imagen+'"></div><div class="mdl-card__supporting-text"><h2 class="mdl-card__title-text">'+registros[i]["Nombre_Negocio"]+'</h2></div><div class="mdl-card__actions mdl-card--border"><span><i class="fa fa-eye" aria-hidden="true">'+registros[i]['Num_Visitas']+'</i></span><a id="perfil" href="<?= base_url()?>emprendedoras/ver_Perfil?id='+registros[i]['FK_Usuaria']+'&cantidad='+registros[i]['Num_Visitas']+'" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Ver perfil</a></div></div></div>';
                     imagen="";
                 }
             }
                 else{
-                    html ='<div class="alert alert-danger" ><label>No se encontraron coincidencias</label></div>'
+                    html ='<div class="card alert alert-danger" ><div class"row"><label>No se encontraron coincidencias</label></div></div>'
                 }
                 document.getElementById('DivRejillas').innerHTML=html;
             }

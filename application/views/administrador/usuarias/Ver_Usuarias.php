@@ -89,7 +89,7 @@ foreach ($registro->result() as $info2) {
                                                                 <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown"><i class="fa fa-cogs fa-lg"></i><span class="caret"></span></button>
                                                                 <ul class="dropdown-menu">
                                                                     <li onclick="NoDelete()"><a title="Este usuario esta activo no se puede eliminar" ><i  class="fa fa-trash-o" aria-hidden="true"></i> Eliminar</a> </li>
-                                                                    <li><a ><i  class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a></li>                                </ul>
+                                                                    <li><a href="'.base_url().'/Emprendedoras/editar?id='.$id.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a></li></ul>
                                                                 </div></td>';
                                                      }
                                                      else{
@@ -98,7 +98,8 @@ foreach ($registro->result() as $info2) {
                                                         echo '<td><div class="dropdown" align="center">
                                                                 <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown"><i class="fa fa-cogs fa-lg"></i><span class="caret"></span></button>
                                                                 <ul class="dropdown-menu">
-                                                                    <li><a onclick="Eliminar($id)" class="btn btn-danger m-b-10 m-l-5"><i class="fa fa-trash-o" aria-hidden="true"></i>Eliminar</a></li>                                </ul>
+                                                                    <li><a onclick="Eliminar($id)" class="btn btn-danger m-b-10 m-l-5"><i class="fa fa-trash-o" aria-hidden="true"></i>Eliminar</a></li>
+                                                                    <li><a href="'.base_url().'/Emprendedoras/editar?id='.$id.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a></li></ul>
                                                                 </div></td>';
                                                         /*echo "<td><a class='btn btn-warning m-b-10 m-l-5'><i style='color:white;' class='fa fa-pencil-square-o' aria-hidden='true'></i></a></td>";*/
                                                      }
@@ -111,7 +112,7 @@ foreach ($registro->result() as $info2) {
                                                                 <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown"><i class="fa fa-cogs fa-lg"></i><span class="caret"></span></button>
                                                                 <ul class="dropdown-menu">
                                                                     <li onclick="NoDelete()"><a  title="Este usuario esta activo no se puede eliminar"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar</a> </li>
-                                                                    <li><a ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> </a> Editar</li>                                </ul>
+                                                                    <li><a href="'.base_url().'/Emprendedoras/editar?id='.$id.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a></li></ul>
                                                                 </div></td>';
                                                        /*echo "<td><a class='disabled btn btn-danger m-b-10 m-l-5'><i style='color:white;' class='fa fa-trash-o' aria-hidden='true'></i></a></td>";
                                                         */

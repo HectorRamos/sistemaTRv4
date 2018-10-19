@@ -10,6 +10,7 @@ foreach ($user->result() as $fila2) {
     .imgs {
         width: 300px;
         height: 300px;
+        
 
     }
     .subirImgG{

@@ -1,7 +1,4 @@
-                    <!-- Page wrapper  -->
-   
-            <footer class="footer">Copyright <a href="#!">UES-FMO</a> &copy; <?php echo date("Y");?></footer>
-            <!-- End footer -->
+     
         </div>
         <!-- End Page wrapper  -->
     </div>
@@ -27,6 +24,7 @@
     <script src="<?=base_url() ?>plantilla/componentes/js/lib/toastr/toastr.min.js"></script>
     <script src="<?=base_url() ?>plantilla/componentes/js/lib/toastr/toastr.init.js"></script>
     <script src="<?=base_url() ?>plantilla/componentes/js/lib/dropzone/dropzone.js"></script>
+      
     <!-- scripit init-->
     <script src="<?=base_url() ?>plantilla/componentes/js/scripts.js"></script>
     <script src="<?=base_url() ?>plantilla/componentes/js/estilos.js"></script>

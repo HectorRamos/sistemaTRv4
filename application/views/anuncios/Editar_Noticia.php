@@ -152,18 +152,52 @@ foreach ($Noticia->result() as $Noti) {
 function SubirImg(){
     document.getElementById('imagenN').click();
 }
-function filePreview(input){
-if(input.files && input.files[0]){
-    var reader = new FileReader(); 
-    reader.readAsDataURL(input.files[0]);
-    reader.onload =function(e) {
-            //$('#formAnuncio + img').remove();
-            //$('#formAnuncio').after('<div class="col-md-4"><img  src="'+e.target.result+'"  width="450" height="300" id="vista"/>');
-            //$('#formAnuncio').innerHTML='<div class="col-md-4"><img  src="'+e.target.result+'"  width="450" height="300" id="vista"/>';
-            document.getElementById('mostrarI').innerHTML='<img  src="'+e.target.result+'"  width="200" height="200" id="vista" alt="Imagen a publicar"/>';
+function ValidarImagen(obj){
+    var uploadFile = obj.files[0];
+    if (!window.FileReader) {
+       sweetAlert('Accion no permitida','El navegador no soporta la lectura de archivos', 'error');
+
+        return;
     }
+
+    if (!(/\.(jpg|png|gif|jpeg)$/i).test(uploadFile.name)) {
+        //alert('El archivo a adjuntar no es una imagen');
+        sweetAlert("Accion no permitida","El archivo que intentas subir no es una imagen", "error");
+        document.getElementById('mostrarI').innerHTML='<img src="<?=base_url()?>plantilla/images/picture.png">';
     }
+    else {
+        var img = new Image();
+        img.onload = function () {
+            if (this.width.toFixed(0) != 720 && this.height.toFixed(0) != 540) {
+                //alert('Las medidas deben ser: 200 * 200');
+                sweetAlert("Accion no permitida", "Tamanio de la imagen no permitida, el temaño permitido es de 720 pixeles de ancho y 540 de alto por favor verificar", "error");
+                 $("#imagenN").val('');
+                 document.getElementById('mostrarI').innerHTML='<img src="<?=base_url()?>plantilla/images/picture.png">';
+
+            }
+            else if (uploadFile.size < 20000)
+            {
+                sweetAlert("Accion no permitida", "El tamaño de la imagen no puede exeder los 200kb", "error");
+                document.getElementById('mostrarI').innerHTML='<img src="<?=base_url()?>plantilla/images/picture.png">';
+               
+            }
+            else {
+                alert('Imagen correcta :)');
+                document.getElementById('mostrarI').innerHTML='<img  src="'+URL.createObjectURL(uploadFile)+'"  width="200" height="200" id="vista" alt="Imagen a publicar"/>';                
+            }
+        };
+        img.src = URL.createObjectURL(uploadFile);
+
+        
+    }                 
 }
+
+$('#imagenN').change(function(){
+    ValidarImagen(this);
+});
+
+
+
 $('#imagenN').change(function(){
     filePreview(this);
 });

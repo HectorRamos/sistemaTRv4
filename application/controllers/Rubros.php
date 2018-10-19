@@ -52,7 +52,7 @@ class Rubros extends CI_Controller {
 		$bool=$this->Rubros_Model->eliminarRubros($datos);
 		if($bool){
 			echo '<script type="text/javascript">
-				alert("Rubro eliminado con éxito");
+				
 				self.location ="'.base_url().'/Rubros"
 				</script>';
 		}
@@ -63,4 +63,14 @@ class Rubros extends CI_Controller {
 				</script>';
 		}
 	}
+	public function VerificarNomRubro(){
+		if ($this->input->is_ajax_request()) {
+			$this->load->model('Rubros_Model');
+			$valor = $this->input->POST("buscar");
+			//$valor="Alimentos y Bebidas";
+			$result = $this->Rubros_Model->verificarNombreRubro($valor);
+			echo json_encode($result);
+		}
+	
+}
 }

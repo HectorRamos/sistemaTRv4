@@ -33,4 +33,21 @@ class Mensajes_Model extends CI_Model
 
 		return $msj;
 	}
+	public function listaMensajesContacto($idContacto){
+		$sql = "SELECT * FROM tbl_Mensajes_Contactos WHERE FK_Id_Contacto=$idContacto ORDER BY PK_Id_Mensaje_Contacto ASC";
+		$mens=$this->db->query($sql);
+		return $mens->result();
+	}
+	public function InsertarMensajesContacto($idContacto, $idEmisor, $idReceptor, $mensaje){
+		$sql ="INSERT INTO tbl_Mensajes_Contactos(Id_Emisor, Id_receptor, Mensaje, FK_Id_Contacto) VALUES ($idEmisor, $idReceptor, '$mensaje', $idContacto)";
+		$bool= $this->db->query($sql);
+		if($bool){
+			$sql2 = "SELECT * FROM tbl_Mensajes_Contactos WHERE FK_Id_Contacto=$idContacto ORDER BY PK_Id_Mensaje_Contacto ASC";
+			$mens=$this->db->query($sql2);
+			return $mens->result();
+		}
+		else{
+			return false;
+		}
+	}
 }
